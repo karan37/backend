@@ -2,11 +2,11 @@
 
 const substractTimeRanges = (timeRangeListA = [], timeRangeListB = []) => {
   let differenceList = []
-  for(var i = 0; i < timeRangeListA.length; i++) {
+  for(let i = 0; i < timeRangeListA.length; i++) {
     const currentTimeRangeA = timeRangeListA[i]
     const minIndex = findMinIndexOfNearestRange(currentTimeRangeA, timeRangeListB)
     const maxIndex = findMaxIndexOfNearestRange(minIndex, currentTimeRangeA, timeRangeListB)
-    if(maxIndex === -2) {
+    if(maxIndex === -2) { // the A A B B case
       differenceList = [...differenceList, currentTimeRangeA]
     } else {
       const list = getDifferenceRangeList(minIndex, maxIndex, currentTimeRangeA, timeRangeListB)
@@ -18,8 +18,8 @@ const substractTimeRanges = (timeRangeListA = [], timeRangeListB = []) => {
 
 const findMaxIndexOfNearestRange = (min, timeRange, timeRangeList) => {
   const { startTime: startTimeA, endTime: endTimeA } = timeRange
-
-  for(var i = min; i < timeRangeList.length; i++ ) {
+  let i
+  for(i = min; i < timeRangeList.length; i++ ) {
     const {startTime: startTimeB, endTime: endTimeB} = timeRangeList[i]
     if(endTimeA <= startTimeB) { // A A B B
       return i - 2
@@ -37,13 +37,12 @@ const findMaxIndexOfNearestRange = (min, timeRange, timeRangeList) => {
       continue
     }
   }
-
   return i - 1 
 }
 
 const findMinIndexOfNearestRange = (timeRange, timeRangeList) => {
   const { startTime: startTimeA } = timeRange
-  for(var i = 0; i < timeRangeList.length; i++) {
+  for(let i = 0; i < timeRangeList.length; i++) {
     const {endTime: endTimeB} = timeRangeList[i]
     if(endTimeB <= startTimeA) {
       continue
@@ -55,9 +54,8 @@ const findMinIndexOfNearestRange = (timeRange, timeRangeList) => {
 
 const getDifferenceRangeList = (min, max, timeRange, timeRangeList) => {
   let differenceList = []
-  let range = {}
   const { startTime: startTimeA, endTime: endTimeA } = timeRange
-  for(var i = min; i <= max; i++) {
+  for(let i = min; i <= max; i++) {
     const { startTime: startTimeB, endTime: endTimeB } = timeRangeList[i]
     if(startTimeA <= startTimeB) {
       if(i === min) {
@@ -83,66 +81,68 @@ const getDifferenceRangeList = (min, max, timeRange, timeRangeList) => {
   return differenceList
 }
 
-// const tester = (a,b) => {
-//   console.log("A: ", a)
-//   console.log("B: ", b)
-//   console.log("")
-//   console.log("A-B: ", substractTimeRanges(a,b))
-//   console.log("")
-//   console.log("-----------------------------------")
-// }
-// const a = [
-//   {startTime: 1, endTime: 10},
-//   {startTime: 15, endTime: 30}
-// ]
+const tester = (a,b) => {
+  console.log("A: ", a)
+  console.log("B: ", b)
+  console.log("")
+  console.log("A-B: ", substractTimeRanges(a,b))
+  console.log("")
+  console.log("-----------------------------------")
+}
 
-// const b = [
-//   {startTime: 3, endTime: 4},
-//   {startTime: 6, endTime: 11},
-//   {startTime: 13, endTime: 17},
-//   {startTime: 18, endTime: 20},
-//   {startTime:22, endTime: 29}
-// ]
+const a = [
+  {startTime: 1, endTime: 10},
+  {startTime: 15, endTime: 30}
+]
 
-// tester(a,b)
+const b = [
+  {startTime: 3, endTime: 4},
+  {startTime: 6, endTime: 11},
+  {startTime: 13, endTime: 17},
+  {startTime: 18, endTime: 20},
+  {startTime:22, endTime: 29}
+]
 
-// const c = [
-//   {startTime: 1, endTime: 10},
-//   {startTime: 20, endTime: 30}
-// ]
 
-// const d = [
-//   {startTime:5, endTime: 25}
-// ]
+const c = [
+  {startTime: 1, endTime: 10},
+  {startTime: 20, endTime: 30}
+]
 
-// tester(c,d)
+const d = [
+  {startTime:5, endTime: 25}
+]
 
-// const x = [
-//   {startTime: 1, endTime: 10},
-// ]
 
-// const y = [
-//   {startTime: 1, endTime: 5}
-// ]
+const x = [
+  {startTime: 1, endTime: 10},
+]
 
-// tester(x,y)
+const y = [
+  {startTime: 1, endTime: 5}
+]
 
-// const m = [
-//   {startTime: 1, endTime: 10},
-// ]
 
-// const n = [
-//   {startTime: 1, endTime: 10}
-// ]
+const m = [
+  {startTime: 1, endTime: 10},
+]
 
-// tester(m,n)
+const n = [
+  {startTime: 1, endTime: 10}
+]
 
-// const k = [
-//   {startTime: 1, endTime: 10},
-// ]
 
-// const j = [
-//   {startTime: 10, endTime: 100}
-// ]
+const k = [
+  {startTime: 1, endTime: 10},
+]
 
-// tester(k,j)
+const j = [
+  {startTime: 10, endTime: 100}
+]
+
+
+tester(a,b)
+tester(c,d)
+tester(x,y)
+tester(m,n)
+tester(k,j)
